@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import cors from "cors"; //test hmr
 const port = process.env.PORT || 5000;
 import connectDb from "./config/connection.js";
+import routes from './routes/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,6 +16,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "../client/dist")));
 app.use(cors());
+
+app.use('/api', routes);
 
 // app.use(routes);
 // app.use(authMiddleware);
