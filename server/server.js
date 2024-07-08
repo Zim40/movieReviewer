@@ -3,11 +3,12 @@ dotenv.config();
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
-import cors from "cors"; //test hmr
-const port = process.env.PORT || 5000;
+import cors from "cors";
 import connectDb from "./config/connection.js";
 import routes from './routes/index.js';
+import Auth from './utils/Auth.js';
 
+const port = process.env.PORT || 5000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
@@ -17,7 +18,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "../client/dist")));
 app.use(cors());
 
+
 app.use('/api', routes);
+app.use(Auth.authMiddleware);
 
 // app.use(routes);
 // app.use(authMiddleware);

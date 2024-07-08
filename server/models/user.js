@@ -1,5 +1,6 @@
 import { Schema } from 'mongoose';
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 const userSchema = new Schema({
     firstName: {
@@ -16,14 +17,22 @@ const userSchema = new Schema({
         unique: true,
         match: [/.+@.+\..+/, 'Must match an email address!'],
     },
-    // password: {
-    //     type: String,
-    //     required: true,
-    // },
-    // timeStamp: {
-    //     type: Date,
-    //     required: true,
-    // },
+    password: {
+        type: String,
+        required: true,
+    },
+    timeStamp: {
+        type: Date,
+        // required: true,
+    },
+});
+
+userSchema.pre('save', async function (next) {
+    if(this.isNew || this.isModified('password')) {
+        const saltRounds = 10;
+        this.password = await bcrypt.hash(this.password, saltRounds);
+    };
+    next();
 });
 
 const User = mongoose.model('User', userSchema);
