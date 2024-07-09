@@ -7,7 +7,7 @@ import cors from "cors";
 import connectDb from "./config/connection.js";
 import routes from './routes/index.js';
 import Auth from './utils/Auth.js';
-// import fetch from 'node-fetch';
+
 
 const port = process.env.PORT || 5000;
 const __filename = fileURLToPath(import.meta.url);
@@ -19,19 +19,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "../client/dist")));
 app.use(cors());
 
-// app.use('/api', );
-
+app.use(Auth.authMiddleware);
 app.use('/api', routes);
-// app.use(Auth.authMiddleware);
 
-
-app.get("/message", (req, res) => {
-  res.send({ message: "Hello message" });
-});
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
 });
+
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).json({ error: "Server.js Error handling Ln: 24" });
