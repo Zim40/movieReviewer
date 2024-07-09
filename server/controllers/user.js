@@ -7,10 +7,10 @@ const userController = {
       const existingUser = await User.findOne({ email: req.body.email });
       if (!existingUser) {
         const user = await User.create(req.body);
-        const token = Auth.signToken(user);
+        // const token = Auth.signToken(user);
         return res
           .status(200)
-          .json({ message: "New user created!", data: { token, user } });
+          .json({ message: "New user created!", data: { user } });
       } else {
         return res.status(409).json({ message: "Email already registered!" });
       }
