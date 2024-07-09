@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "../client/dist")));
 app.use(cors());
 
-app.use(Auth.authMiddleware);
+// app.use(Auth.authMiddleware);
 app.use('/api', routes);
 
 

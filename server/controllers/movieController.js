@@ -11,16 +11,17 @@ const movieController = {
         },
       });
       if (!response.ok) {
-        throw new Error("HTTP error!: ");
+        throw new Error("!Response.ok");
       }
       const data = await response.json();
       res
         .status(200)
         .json({ data: data, message: "Fetch request Successful!" });
     } catch (error) {
-      res.status(500).json({ message: "Internal Server Error Catch" });
+      res.status(500).json({ error: error.message,  message: "Internal Server Error Catch" });
     }
   },
+
 };
 
 export default movieController;
