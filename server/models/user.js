@@ -21,10 +21,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    timeStamp: {
-        type: Date,
-        // required: true,
-    },
+    timeStamp: true,
 });
 
 userSchema.pre('save', async function (next) {
