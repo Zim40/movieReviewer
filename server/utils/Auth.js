@@ -12,7 +12,7 @@ const Auth = {
             return res.status(401).json({ error: "Unauthorized"});
         }
         try {
-            const { data } = jwt.verify(token, secret, { maxAge: expiration });
+            const { data } = jwt.verify(token, process.env.MY_SECRET, { maxAge: process.env.EXPIRATION });
             req.user = data
             next();
         } catch(error) {

@@ -3,6 +3,12 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
 const userSchema = new Schema({
+    userName: {
+        type: String,
+        required: true,
+        min: [3, 'Must be at least 3 characters, got {VALUE}'],
+        max: 100
+    },
     firstName: {
         type: String,
         required: true,
@@ -21,6 +27,11 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    favorites: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Movies',
+        index: true,
+    }],
     timeStamp: {
         type: Date,
         default: Date.now(), 
@@ -34,6 +45,10 @@ userSchema.pre('save', async function (next) {
     };
     next();
 });
+
+userSchema.methods.isCorrectPassword = async function (password) {
+    return bcrypt.compare(password, this.password);
+  };
 
 const User = mongoose.model('User', userSchema);
 console.log('User Schema created.');
