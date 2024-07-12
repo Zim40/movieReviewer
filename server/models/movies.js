@@ -23,7 +23,9 @@ const moviesSchema = new Schema ({
     },
     image: {
         type: String,
-    }
+    },
+    
+    // timestamp: true,
 });
 
 moviesSchema.statics.getMovieCountByUserId = function () {
