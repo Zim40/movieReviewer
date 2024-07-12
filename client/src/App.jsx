@@ -2,32 +2,13 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-  const testUser = {
-    firstName: "test3",
-    lastName: "thomp",
-    email: "test3@gmail.com",
-  };
+  // const testUser = {
+  //   firstName: "test3",
+  //   lastName: "thomp",
+  //   email: "test3@gmail.com",
+  // };
 
-  const handleSubmit = async () => {
-    try {
-      const response = await fetch('/api/users/create', {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify( testUser ),
-      })
-      const responseData = await response.json();
-      if(!responseData.ok) {
-        console.log(responseData.message);
-      } else {
-        console.log(responseData.message);
-      }
-    } catch (err) {
-console.error(err.message);
-    }
- 
-  }
+  
 
 function App() {
   const [count, setCount] = useState(0)
@@ -46,9 +27,6 @@ function App() {
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
-        </button>
-        <button onClick={handleSubmit}>
-          testButton
         </button>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
