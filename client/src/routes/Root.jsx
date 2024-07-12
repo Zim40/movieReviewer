@@ -9,7 +9,10 @@ export default function Root() {
                 <nav>
                     <ul>
                         <li>
-                            <Link to='/app'>app Link</Link>
+                            <Link to='/'>Home</Link>
+                        </li>
+                        <li>
+                            <Link to='/app'>App link</Link>
                         </li>
                     </ul>
                 </nav>
