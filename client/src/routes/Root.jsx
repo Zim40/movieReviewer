@@ -1,23 +1,23 @@
-import Navbar from '../Components/nav';
-import { Outlet, Link } from 'react-router-dom';
+// import Navbar from "../Components/nav";
+import { Outlet, Link } from "react-router-dom";
 
 export default function Root() {
-    return (
-        <>
-            <Navbar />
-            <div id="content">
-                <nav>
-                    <ul>
-                        <li>
-                            <Link to='/'>Home</Link>
-                        </li>
-                        <li>
-                            <Link to='/app'>App link</Link>
-                        </li>
-                    </ul>
-                </nav>
-                <Outlet />
-            </div>
-        </>
-    )
+  return (
+    <>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/app">Test link</Link>
+          </li>
+        </ul>
+      </nav>
+
+      <div id="content">
+        <Outlet />
+      </div>
+    </>
+  );
 }
