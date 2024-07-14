@@ -1,20 +1,12 @@
-// import Navbar from "../Components/nav";
-import { Outlet, Link } from "react-router-dom";
+import Navbar from "../Components/Navigation/nav";
+import { Outlet } from "react-router-dom";
 
 export default function Root() {
   return (
     <>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/app">Test link</Link>
-          </li>
-        </ul>
-      </nav>
-
+      <header className="top-0 w-full">
+        <Navbar />
+      </header>
       <div id="content">
         <Outlet />
       </div>
