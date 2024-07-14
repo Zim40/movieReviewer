@@ -37,7 +37,7 @@ export default function Navbar() {
           classNames="my-node"
           unmountOnExit
         >
-          <div ref={nodeRef} className="Mobile Nav Container">
+          <div ref={nodeRef} className="Mobile Nav Container z-20 ">
             {isOpen && mobileNav(toggleMenu)}
           </div>
         </CSSTransition>
