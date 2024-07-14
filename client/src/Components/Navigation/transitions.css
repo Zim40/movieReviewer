@@ -1,0 +1,19 @@
+.my-node-enter {
+    
+    opacity: 0;
+    /* right:-100%; */
+  }
+  .my-node-enter-active {
+    opacity: 1;
+    /* right:0; */
+    transition:  opacity 400ms;
+  }
+  .my-node-exit {
+    opacity: 1;
+    /* right: 0; */
+  }
+  .my-node-exit-active {
+    opacity: 0;
+    /* right: -100%; */
+    transition:  opacity 400ms;
+  }
