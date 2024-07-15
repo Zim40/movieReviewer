@@ -8,13 +8,14 @@ export default function Root() {
   return (
     <>
       <header className="top-0 w-full">
-      
         <Navbar />
         <Suspense fallback={<Loading />}>
           <div>
             <Image
-              title="Discover Millions of Movies & TV Shows!"
-              subTitle="Favorite and Save Movies"
+              lineOne="Discover"
+              subTextOne="Millions of Movies and TV Shows"
+              subTitle="Explore"
+              subTextTwo="Review, Rate, and Save Your Favorites!"
             />
           </div>
         </Suspense>
