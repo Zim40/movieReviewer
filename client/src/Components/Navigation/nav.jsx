@@ -48,7 +48,7 @@ export default function Navbar() {
 
 const mobileNav = (toggleMenu) => {
   return (
-    <div className="absolute top-10 left-0 w-full flex flex-col gap-2 flex-row-reverse h-screen bg-[#242424]">
+    <div className="absolute top-10 left-0 w-full flex flex-col gap-2 flex-row-reverse h-screen bg-[#0e1018]">
       <div className="flex flex-col text-right tracking-widest p-2 space-y-1">
         <li className="">
           <Link to="/" onClick={toggleMenu}>
