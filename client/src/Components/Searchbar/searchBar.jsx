@@ -6,7 +6,7 @@ export default function Searchbar({ onButtonClick, text }) {
       <input
         type="search"
         id="search"
-        className="block w-full p-2 ps-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 space-y-4"
+        className="block w-full p-2 ps-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white bg-opacity-30 space-y-4"
         placeholder="Search"
         required
       />

@@ -16,16 +16,18 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "../client/dist")));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/dist')));
+}
 app.use(cors());
 
 // app.use(Auth.authMiddleware);
 app.use('/api', routes);
 
 
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
-// });
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
+});
 
 app.use((err, req, res, next) => {
   console.error(err);
