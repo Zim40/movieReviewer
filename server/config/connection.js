@@ -3,13 +3,12 @@ dotenv.config();
 import { connect } from "http2";
 import mongoose from "mongoose";
 
-const url = process.env.CONNECTION;
-const productionUrl = process.env.MONGO_CONNECTION
 
+const mongoUri = process.env.MONGO_CONNECTION || process.env.CONNECTION;
 
 const connectDb = async () => {
   try {
-    await mongoose.connect(url || productionUrl, {
+    await mongoose.connect(mongoUri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
