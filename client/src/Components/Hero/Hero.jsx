@@ -1,6 +1,7 @@
 import propTypes from "prop-types";
 import Image from "../../assets/Hero.jpg";
 import Searchbar from "../Searchbar/searchBar";
+import Movies from '../Movies/movies';
 import "./style.css";
 
 export default function Hero({ lineOne, subTextOne, subTitle, subTextTwo }) {
@@ -23,6 +24,7 @@ export default function Hero({ lineOne, subTextOne, subTitle, subTextTwo }) {
         <div className="w-full flex justify-center lg:w-full">
           <Searchbar onButtonClick={Hello} text="Search" />
         </div>
+        <Movies /> 
       </div>
       <img
         src={Image}
