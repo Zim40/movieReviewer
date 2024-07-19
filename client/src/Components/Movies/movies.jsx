@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import fetchMovies from "../../Functions/movies";
+// import fetchMovies from "../../Functions/movies";
+import { fetchMovies } from "../../Functions/movies";
 
 export default function Movies() {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
 
   useEffect(() => {
     const getMovies = async () => {
@@ -13,34 +14,42 @@ export default function Movies() {
         const movies = await fetchMovies();
         setData(movies.data.results);
       } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+        setData(error.message);
       }
     };
 
     getMovies();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
 
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  // if (error) {
+  //   return <div>Error: {error}</div>;
+  // }
+  console.log(data);
   return (
-    <div className="flex gap-2">
+    <>
       {data.map((movie) => (
-        <div className="flex border" key={movie.id}>
-          <h2>{movie.title}</h2>
-          <p>{movie.original_language}</p>
-          <p>{movie.overview}</p>
-          <p>{movie.release_date}</p>
+        <div className="flex flex-col m-2 bg-[#0e1018] bg-opacity-60 rounded p-2" key={movie.id}>
+          <img
+            className="h-auto max-w-48 sm:max-w-96 overflow-hidden rounded transition-all duration-300  "
+            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            alt="Movie Poster"
+          ></img>
+          <div>
+            <h1 className="text-lg font-bold font-mono">{movie.title}</h1>
+            <div>
+              <p className="font-semibold">Released: {movie.release_date}</p>
+              <p>{movie.original_language}</p>
+            </div>
+          </div>
         </div>
       ))}
-    </div>
+    </>
   );
 }
 

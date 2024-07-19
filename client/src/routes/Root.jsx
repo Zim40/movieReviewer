@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { lazy, Suspense} from "react";
+import { lazy, Suspense } from "react";
 import Loading from "../Loading";
 // const Movies = lazy(() => import('../Components/Movies/movies'));
 const Hero = lazy(() => import("../Components/Hero/Hero"));
@@ -26,25 +26,16 @@ export default function Root() {
   // console.log(data);
   return (
     <>
-      <Suspense fallback={<Loading />}>
-        <div>
+      <div>
+        <Suspense fallback={<Loading />}>
           <Hero
             lineOne="Discover"
             subTextOne="Millions of Movies and TV Shows"
             subTitle="Explore"
             subTextTwo="Review, Rate, and Save Your Favorites!"
           />
-            <div>
-          {/* {data ? (
-            <Movies data={data.data.results} />
-          )  : (
-            ""
-          ) } */}
-          
-        </div>
-        </div>
-      
-      </Suspense>
+        </Suspense>
+      </div>
 
       <div id="content">
         <Outlet />

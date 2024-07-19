@@ -1,4 +1,5 @@
-export default async function fetchMovies () {
+
+export async function fetchMovies() {
   try {
     const response = await fetch("/api/movies");
     if (!response.ok) {
@@ -10,3 +11,5 @@ export default async function fetchMovies () {
     console.error(error);
   }
 }
+
+

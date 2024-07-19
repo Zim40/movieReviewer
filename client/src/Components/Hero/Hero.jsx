@@ -1,13 +1,14 @@
 import propTypes from "prop-types";
+import { lazy, Suspense} from "react";
+import Spinner from '../../Spinner';
 import Image from "../../assets/Hero.jpg";
-import Searchbar from "../Searchbar/searchBar";
-import Movies from '../Movies/movies';
+
+// import Movies from '../Movies/movies';
+const Movies = lazy(() => import ('../Movies/movies'));
 import "./style.css";
 
 export default function Hero({ lineOne, subTextOne, subTitle, subTextTwo }) {
-  const Hello = () => {
-    console.log("Hello World");
-  };
+
   return (
     <div className="z-10 relative  sm:h-96">
       <div className="absolute flex flex-col items-center w-full h-screen  bg-black bg-opacity-60 p-2 space-y-4">
@@ -21,10 +22,13 @@ export default function Hero({ lineOne, subTextOne, subTitle, subTextTwo }) {
           {subTitle}
         </h2>
         <p className="font-semibold text-lg">{subTextTwo}</p>
-        <div className="w-full flex justify-center lg:w-full">
-          <Searchbar onButtonClick={Hello} text="Search" />
+        
+        <Suspense fallback={<Spinner />}>
+        <div className="flex w-full h-screen overflow-y-hidden overflow-x-scroll">
+          <Movies />
         </div>
-        <Movies /> 
+        </Suspense>
+       
       </div>
       <img
         src={Image}
