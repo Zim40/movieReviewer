@@ -30,7 +30,7 @@ export default function Movies() {
   // if (error) {
   //   return <div>Error: {error}</div>;
   // }
-  console.log(data);
+
   return (
     <>
       {data.map((movie) => (

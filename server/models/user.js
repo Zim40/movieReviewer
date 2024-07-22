@@ -3,12 +3,12 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
 const userSchema = new Schema({
-    userName: {
-        type: String,
-        required: true,
-        min: [3, 'Must be at least 3 characters, got {VALUE}'],
-        max: 100
-    },
+    // userName: {
+    //     type: String,
+    //     required: true,
+    //     min: [3, 'Must be at least 3 characters, got {VALUE}'],
+    //     max: 100
+    // },
     firstName: {
         type: String,
         required: true,

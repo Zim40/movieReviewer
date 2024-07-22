@@ -4,7 +4,7 @@ import { connect } from "http2";
 import mongoose from "mongoose";
 
 
-const mongoUri = process.env.MONGO_CONNECTION || process.env.CONNECTION;
+const mongoUri =  process.env.CONNECTION || process.env.MONGO_CONNECTION ;
 
 const connectDb = async () => {
   try {

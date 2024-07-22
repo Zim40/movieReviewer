@@ -5,25 +5,6 @@ import Loading from "../Loading";
 const Hero = lazy(() => import("../Components/Hero/Hero"));
 
 export default function Root() {
-  // const [data, setData] = useState();
-
-  // useEffect(() => {
-  //   const fetchMovies = async () => {
-  //     try {
-  //       const response = await fetch("/api/movies");
-  //       if (!response.ok) {
-  //         throw new Error("Error fetching data:");
-  //       }
-  //       const movies = await response.json();
-  //       setData(movies);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-
-  //   fetchMovies();
-  // }, []);
-  // console.log(data);
   return (
     <>
       <div>
