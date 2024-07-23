@@ -1,6 +1,6 @@
 import propTypes from "prop-types";
 import { lazy, Suspense } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import Spinner from "../../Spinner";
 import Image from "../../assets/Hero.jpg";
 
@@ -22,15 +22,15 @@ export default function Hero({ lineOne, subTextOne, subTitle, subTextTwo }) {
           {subTitle}
         </h2>
         <p className="font-semibold text-lg">{subTextTwo}</p>
-        <div className="flex space-x-2">
+        <div className="flex align-center items-center justify-center rounded-full bg-[#0e1018] bg-opacity-60 space-x-2 p-2 w-full md:w-1/2">
           <Link to="/login">
-            <button className="flex align-center items-center border rounded p-1 bg-[#5a5e62]">
+            <button className="flex w-36 align-center items-center justify-center border border-amber-400 rounded-full  p-1 bg-[#0e1018]">
               Login
             </button>
           </Link>
           <Link to="/register">
-            <button className="flex align-center items-center border rounded p-1 bg-[#5a5e62]">
-              Register
+            <button className="flex w-36 align-center items-center justify-center border border-amber-400 rounded-full p-1 bg-[#0e1018]">
+              Sign Up
             </button>
           </Link>
         </div>
