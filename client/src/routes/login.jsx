@@ -2,17 +2,19 @@ import { useState } from "react";
 import Auth from "../utils/Auth";
 import Button from "../Components/Button/button";
 
+
 export default function Login() {
   const [errorText, setErrorText] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
+  const apiUrl = import.meta.env.NODE_ENV === "production" ? import.meta.env.VITE_DEPLOYED_URL : import.meta.env.VITE_DEV_URL ;
+console.log(`URL: ${apiUrl}`)
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/users/login", {
+      const response = await fetch(`${apiUrl}/api/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
