@@ -3,8 +3,10 @@ dotenv.config();
 import { connect } from "http2";
 import mongoose from "mongoose";
 
-
-const mongoUri =  process.env.CONNECTION || process.env.MONGO_CONNECTION ;
+const mongoUri =
+  process.env.NODE_ENV === "production"
+    ? process.env.MONGO_CONNECTION
+    : process.env.CONNECTION;
 
 const connectDb = async () => {
   try {
@@ -12,7 +14,7 @@ const connectDb = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log("Database Connection Successful!")
+    console.log("Database Connection Successful!");
   } catch (err) {
     console.log("Error starting server connection", err.message);
   }
