@@ -44,13 +44,13 @@ export default function Login() {
   };
   return (
     <>
-      <div className="flex align-center items-center  justify-center h-96">
-        <form className="w-full">
-          <div className="flex flex-col space-y-2 p-4 w-full lg:w-1/4 mt-auto">
-            <h1 className="text-xl mb-10 tracking-widest font-mono font-bold border-b">
+      <div className="flex p-2 align-center items-center  justify-center h-screen md:w-full">
+        <form className="w-full flex flex-col align-center border border-amber-400 rounded-lg p-4 items-center">
+          <div className="flex flex-col space-y-4  p-4 w-full lg:w-1/4 mt-auto">
+            <h1 className="text-xl text-amber-400 mb-10 tracking-widest font-mono font-bold border-b">
               Login
             </h1>
-            <label className="uppercase text-xs font-mono font-semibold tracking-widest">
+            <label className="uppercase text-amber-400 text-xs font-mono font-semibold tracking-widest">
               Email
             </label>
             <input
@@ -63,7 +63,7 @@ export default function Login() {
             ></input>
           </div>
           <div className="flex flex-col space-y-2 p-4 w-full lg:w-1/4">
-            <label className="uppercase text-xs font-mono font-semibold tracking-widest">
+            <label className="uppercase text-amber-400 text-xs font-mono font-semibold tracking-widest">
               Password
             </label>
             <input

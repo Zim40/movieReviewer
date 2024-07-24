@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 // import fetchMovies from "../../Functions/movies";
-import { fetchMovies } from "../../Functions/movies";
+import { fetchMovies, formatPercentage } from "../../Functions/movies";
+
 
 export default function Movies() {
   const [data, setData] = useState([]);
@@ -43,8 +44,8 @@ export default function Movies() {
           <div>
             <h1 className="text-lg font-bold font-mono">{movie.title}</h1>
             <div>
-              <p className="font-semibold">Released: {movie.release_date}</p>
-              <p>{movie.original_language}</p>
+              <p className="font-semibold"><span className="text-amber-400">Released:</span> {movie.release_date}</p>
+              <p><span className="text-amber-400">Rating: </span>{formatPercentage(movie.vote_average)}/10</p>
             </div>
           </div>
         </div>
@@ -61,6 +62,7 @@ Movies.propTypes = {
       original_language: PropTypes.string.isRequired,
       overview: PropTypes.string,
       release_date: PropTypes.string.isRequired,
+      vote_average: PropTypes.number,
     })
   ),
 };

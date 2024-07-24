@@ -11,18 +11,18 @@ import "./style.css";
 export default function Hero({ lineOne, subTextOne, subTitle, subTextTwo }) {
   return (
     <div className="z-10 relative  sm:h-96">
-      <div className="absolute flex flex-col items-center w-full h-screen  bg-black bg-opacity-60 p-2 space-y-4">
+      <div className="absolute flex flex-col items-center w-full h-screen  bg-black bg-opacity-60 p-2">
         <h1 className="font-mono text-3xl font-bold text-white tracking-widest text-shadow-default">
           {lineOne}
         </h1>
-        <p className="text-shadow-default font-semibold text-lg">
+        <p className="text-md">
           {subTextOne}
         </p>
         <h2 className="font-mono text-3xl font-bold text-white tracking-widest">
           {subTitle}
         </h2>
-        <p className="font-semibold text-lg">{subTextTwo}</p>
-        <div className="flex align-center items-center justify-center rounded-full bg-[#0e1018] bg-opacity-60 space-x-2 p-2 w-full md:w-1/2">
+        <p className="text-md">{subTextTwo}</p>
+        <div className="flex align-center items-center justify-center rounded-full bg-[#0e1018] bg-opacity-60 gap-4 p-2 mt-4 w-full md:w-1/2">
           <Link to="/login">
             <button className="flex w-36 align-center items-center justify-center border border-amber-400 rounded-full  p-1 bg-[#0e1018]">
               Login
@@ -36,9 +36,14 @@ export default function Hero({ lineOne, subTextOne, subTitle, subTextTwo }) {
         </div>
 
         <Suspense fallback={<Spinner />}>
-          <div className="flex w-full h-screen overflow-y-hidden overflow-x-scroll">
-            <Movies />
-          </div>
+         
+            <label className="w-full text-center p-1 rounded-full bg-[#0e1018] bg-opacity-60 text-amber-400 font-mono tracking-widest mt-4">
+              Popular
+            </label>
+            <div className="flex w-full overflow-y-hidden overflow-x-scroll">
+              <Movies />
+            </div>
+          
         </Suspense>
       </div>
       <img
