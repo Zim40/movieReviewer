@@ -29,31 +29,31 @@ export default function Navbar() {
         </h1>
 
         <div className="flex gap-2 flex-row-reverse hidden sm:flex">
-        {Auth.loggedIn() ? (
-          <li className="" >
-            <span onClick={logout} className="">Logout</span>
-          </li>
-        ) : (
-          <li className="">
-            <span className="mr-2">
-              <Link to="/login">
-                Login
-              </Link>
-            </span>
-            <span>
-              <Link to="/register">
-                Register
-              </Link>
-            </span>
-          </li>
-        )}
+          {Auth.loggedIn() ? (
+            <li className="">
+              <span onClick={logout} className="">
+                Logout
+              </span>
+            </li>
+          ) : (
+            <li className="">
+              <span className="mr-2">
+                <Link to="/login">Login</Link>
+              </span>
+              <span>
+                <Link to="/register">Register</Link>
+              </span>
+            </li>
+          )}
           <li className="">
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/app">Dashboard</Link>
+            <Link to="/dashboard">Dashboard</Link>
           </li>
-          
+          <li>
+            <Link to="/searchMovies">Search Movies</Link>
+          </li>
         </div>
 
         <button className="sm:hidden" onClick={toggleMenu}>
@@ -77,39 +77,52 @@ export default function Navbar() {
 
 const mobileNav = (toggleMenu, logout) => {
   return (
-    <div className="absolute top-10 left-0 w-full flex flex-col gap-2 flex-row-reverse h-screen bg-[#0e1018]">
-      <div className="flex flex-col text-right text-lg tracking-widest p-2 space-y-8 mt-6">
-        <li className="">
-          <Link to="/" onClick={toggleMenu}>
-            Home
-          </Link>
-        </li>
-        <li>
-          <Link to="/app" onClick={toggleMenu}>
-            Dashboard
-          </Link>
-        </li>
-
-        {Auth.loggedIn() ? (
-          <li className="" >
-            <span onClick={logout} className="">Logout</span>
-          </li>
-        ) : (
+    <div className="absolute top-10 left-0 w-full flex flex-col gap-2 flex-row-reverse h-screen bg-[#0e1018] md:hidden">
+      <nav className="flex flex-col text-right text-lg tracking-widest p-2 space-y-8 mt-6">
+        <ul className="space-y-10">
           <li className="">
-            <span className="">
-              <Link to="/login" onClick={toggleMenu}>
-                Login
-              </Link>
-            </span>
-            <span className="text-xs mx-2 text-slate-500">or</span>
-            <span>
-              <Link to="/register" onClick={toggleMenu}>
-                Register
-              </Link>
-            </span>
+            <Link to="/" onClick={toggleMenu}>
+              Home
+            </Link>
           </li>
-        )}
-      </div>
+          <li>
+            <Link to="/dashboard" onClick={toggleMenu}>
+              Dashboard
+            </Link>
+          </li>
+          <li>
+            <Link to="/searchMovies" onClick={toggleMenu}>
+              Search Movies
+            </Link>
+          </li>
+
+          {Auth.loggedIn() ? (
+            <div className="mt-8">
+              <p className="">
+                <span onClick={logout} className="">
+                  Logout
+                </span>
+              </p>
+            </div>
+          ) : (
+            <div className="border-t border-slate-600">
+              <p className="text-sm py-6">
+                <span className="font-semibold text-green-400">
+                  <Link to="/login" onClick={toggleMenu}>
+                    Login
+                  </Link>
+                </span>
+                <span className="text-xs mx-2 text-slate-500">or</span>
+                <span className="font-semibold text-slate-400">
+                  <Link to="/register" onClick={toggleMenu}>
+                    Register
+                  </Link>
+                </span>
+              </p>
+            </div>
+          )}
+        </ul>
+      </nav>
     </div>
   );
 };

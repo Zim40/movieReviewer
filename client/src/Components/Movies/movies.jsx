@@ -34,10 +34,11 @@ export default function Movies() {
 
   return (
     <>
+    
       {data.map((movie) => (
         <div className="flex flex-col m-2 bg-[#0e1018] bg-opacity-60 rounded p-2" key={movie.id}>
           <img
-            className="h-auto max-w-48 sm:max-w-96 overflow-hidden rounded transition-all duration-300  "
+            className="h-auto max-w-48 sm:max-w-72 overflow-hidden rounded transition-all duration-300  "
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             alt="Movie Poster"
           ></img>

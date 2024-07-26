@@ -4,9 +4,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./routes/Root.jsx";
 import ErrorPage from "./error-page.jsx";
 import Header from "./Components/Header/Header.jsx";
+import SearchMovies from "./routes/SearchMovies.jsx";
 import Login from "./routes/login.jsx";
 import Register from "./routes/Register.jsx";
-import App from "./App.jsx";
+import Dashboard from "./routes/Dashboard.jsx";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -19,8 +20,8 @@ const router = createBrowserRouter([
         element: <Root />, //Nav bar and header
       },
       {
-        path: "/app",
-        element: <App />,
+        path: "/dashboard",
+        element: <Dashboard />,
       },
       {
         path:"/login",
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/searchMovies",
+        element: <SearchMovies />
       }
     ],
   },

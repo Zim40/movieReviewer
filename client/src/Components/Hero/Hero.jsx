@@ -15,9 +15,7 @@ export default function Hero({ lineOne, subTextOne, subTitle, subTextTwo }) {
         <h1 className="font-mono text-3xl font-bold text-white tracking-widest text-shadow-default">
           {lineOne}
         </h1>
-        <p className="text-md">
-          {subTextOne}
-        </p>
+        <p className="text-md">{subTextOne}</p>
         <h2 className="font-mono text-3xl font-bold text-white tracking-widest">
           {subTitle}
         </h2>
@@ -36,14 +34,13 @@ export default function Hero({ lineOne, subTextOne, subTitle, subTextTwo }) {
         </div>
 
         <Suspense fallback={<Spinner />}>
-         
-            <label className="w-full text-center p-1 rounded-full bg-[#0e1018] bg-opacity-60 text-amber-400 font-mono tracking-widest mt-4">
-              Popular
-            </label>
-            <div className="flex w-full overflow-y-hidden overflow-x-scroll">
-              <Movies />
-            </div>
-          
+          <div className="flex w-full text-sm px-4 mt-4">
+            <label className="block border-b border-r border-amber-400 px-2 text-amber-400 font-semibold font-mono rounded-md">Popular</label>
+          </div>
+
+          <div className="flex w-full overflow-y-hidden overflow-x-scroll">
+            <Movies />
+          </div>
         </Suspense>
       </div>
       <img
