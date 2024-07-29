@@ -22,7 +22,7 @@ const movieController = {
     }
   },
   async fetchSingleMovie(req, res) {
-    const params = req.body.movie;
+    const params  = req.query.movie;
     try {
       const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${params}&include_adult=false&language=en-US&page=1`, {
         method: "GET",
