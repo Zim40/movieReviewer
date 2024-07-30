@@ -17,15 +17,23 @@ export function formatPercentage(value) {
     return Math.trunc(value)
 }
 
-export async function fetchSingleMovie() {
+export async function fetchSingleMovie(param) {
   try {
-    const response = await fetch("/api/search/movie");
+    const response = await fetch(
+      `/api/search/movie?movie=${param}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     if (!response.ok) {
-      throw new Error("Error with reponse:");
+      throw new Error("Error with Fetch Single Movie Response");
     }
     const singleMovie = await response.json();
     console.log(singleMovie);
-    return singleMovie;
+    return singleMovie.data.results[0];
   } catch (error) {
     console.error(error);
   }

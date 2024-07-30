@@ -25,7 +25,9 @@ export default function Navbar() {
     <nav className="w-full">
       <ul className="flex align-middle items-center justify-end p-2">
         <h1 className="mr-auto tracking-tighter font-semibold">
+          <Link to="/">
           {isUser ? `${isUser.firstName} ${isUser.lastName}` : `Welcome`}
+          </Link>
         </h1>
 
         <div className="flex gap-2 flex-row-reverse hidden sm:flex">
@@ -52,7 +54,7 @@ export default function Navbar() {
             <Link to="/dashboard">Dashboard</Link>
           </li>
           <li>
-            <Link to="/searchMovies">Search Movies</Link>
+            <Link to="/searchMovies">Browse Movies</Link>
           </li>
         </div>
 
@@ -92,7 +94,7 @@ const mobileNav = (toggleMenu, logout) => {
           </li>
           <li>
             <Link to="/searchMovies" onClick={toggleMenu}>
-              Search Movies
+              Browse Movies
             </Link>
           </li>
 

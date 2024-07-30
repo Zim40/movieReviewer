@@ -1,32 +1,36 @@
-import { useState} from "react";
+import { useState, Suspense, lazy } from "react";
+const Card = lazy(() => import("../Components/Card/card"))
+import Spinner from "../Spinner";
+// import Card from "../Components/Card/card";
+import { fetchSingleMovie } from "../Functions/movies";
 
 
 export default function SearchMovies() {
-  const [movie, setMovie] = useState({});
+  const [movie, setMovie] = useState() || null;
   const [searchParam, setSearchParam] = useState({ movie: "" });
+  const [errorMessage, setErrorMessage] = useState() || null;
+
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`/api/search/movie?movie=${encodeURIComponent(searchParam.movie)}`, {
-        method: "GET",
-        headers: {
-          "Content-Type" : "application/json",
-        },
-      })
-      const responseData = await response.json();
-      
-      if(!response.ok) {
-        throw new Error("Error fetching movie")
+      if(!searchParam.movie) {
+        setErrorMessage("Search Term Required!")
+        setTimeout(() => {
+          setErrorMessage("")
+        }, 1000)
+        return
       }
-      
-      setMovie(responseData.data.results[0]);
-      setSearchParam({ movie: "" })
+      const fetchMove = await fetchSingleMovie(
+        encodeURIComponent(searchParam.movie)
+      );
+      setMovie(fetchMove);
+      setSearchParam({ movie: "" });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -38,8 +42,8 @@ export default function SearchMovies() {
 
   return (
     <>
-      <section className="flex flex-col w-full align-center place-items-center justify-center p-4">
-        <div className="flex align-center  place-items-center gap-2 flex-row-reverse w-full ">
+      <section className="flex flex-col w-full align-center place-items-center justify-center p-4 ">
+        <div className="flex align-center  place-items-center gap-2 flex-row-reverse w-full md:w-1/3">
           <button
             type="submit"
             name="Search bar"
@@ -53,14 +57,26 @@ export default function SearchMovies() {
             name="movie"
             value={searchParam.movie}
             onChange={handleInputChange}
-            placeholder="Search Movies"
-            className="w-full border rounded-full h-8 border-amber-400 px-6 text-center"
+            placeholder={errorMessage ? errorMessage : "Search"}
+            className={`w-full border rounded-full h-8 border-amber-400 px-6 text-center text-amber-400 ${errorMessage ? "placeholder-red-400" : "placeholder-gray-400"}`}
           />
         </div>
-
-        <div className="m-w-96">
-          <h1>{movie.title}</h1>
-          <p>{movie.overview}</p>
+        <div className="py-4 flex align-center  place-items-center gap-2 flex-row-reverse w-full md:w-1/3">
+          {
+            movie && (
+              <Suspense fallback={<Spinner />}>
+              <Card
+                title={movie?.title || null}
+                poster_path={movie?.backdrop_path || null}
+                overview={movie?.overview || null}
+                release_date={movie?.release_date}
+                vote_average={movie?.vote_average}
+                original_language={movie?.original_language}
+              />
+            </Suspense>
+            )
+          
+          }
         </div>
       </section>
     </>
