@@ -20,6 +20,7 @@ const userController = {
     }
   },
   //Function wont work until client side code and login is setup
+  //When Testing make to sure to include the token within insomnia
   async getMe(req, res) {  
     try {
       const user = await User.findById({ _id: req.user._id });

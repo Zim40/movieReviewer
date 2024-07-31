@@ -1,14 +1,9 @@
 import { Schema } from 'mongoose';
 import mongoose from 'mongoose';
+import moviesSchema from "./movies.js"
 import bcrypt from 'bcrypt';
 
 const userSchema = new Schema({
-    // userName: {
-    //     type: String,
-    //     required: true,
-    //     min: [3, 'Must be at least 3 characters, got {VALUE}'],
-    //     max: 100
-    // },
     firstName: {
         type: String,
         required: true,
@@ -27,11 +22,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    favorites: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Movies',
-        index: true,
-    }],
+    favorites: [moviesSchema],
     timeStamp: {
         type: Date,
         default: Date.now(), 

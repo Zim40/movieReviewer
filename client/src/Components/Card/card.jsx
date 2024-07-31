@@ -1,4 +1,6 @@
 import PropTypes from "prop-types";
+import { RiStarSFill } from "react-icons/ri";
+import { RiStarSLine } from "react-icons/ri";
 import {  formatPercentage } from "../../Functions/movies"
 
 export default function Card({ title, poster_path, overview, original_language, release_date, vote_average }) {
@@ -12,8 +14,9 @@ export default function Card({ title, poster_path, overview, original_language, 
       <h1 className="font-semibold text-amber-400 text-lg tracking-wide font-mono border-b border-amber-400 border-opacity-30">{title}</h1>
       <p><span className="font-semibold text-amber-400">Release: </span>{release_date}</p>
       <p><span className="font-semibold text-amber-400">Language: </span>{original_language}</p>
-      <p><span className="font-semibold text-amber-400">Rating: </span>{formatPercentage(vote_average)}</p>
+      <p><span className="font-semibold text-amber-400">Rating: </span>{formatPercentage(vote_average)}/10</p>
       <p className="tracking-tight"><span className="block font-semibold text-amber-400">Overview:</span>{overview}</p>
+      <p className="text-2xl text-amber-300"><RiStarSFill /><RiStarSLine /></p>
     </div>
   );
 }

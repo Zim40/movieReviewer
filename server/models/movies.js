@@ -1,36 +1,38 @@
-import { Schema } from 'mongoose';
-import mongoose from 'mongoose';
+import { Schema } from "mongoose";
+import mongoose from "mongoose";
 
-const moviesSchema = new Schema ({
-    _id: {
-        type: String,
-        required: true,
-    },
-    user_id: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: 'User',
-    },
-    title: {
-        type: String,
-        required: true,
-    },
-    description: {
-        type: String,
-    },
-    language: {
-        type: String,
-    },
-    image: {
-        type: String,
-    },
-    
-    // timestamp: true,
-});
+const moviesSchema = new Schema({
+  movie_id: {
+    type: String,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  overview: {
+    type: String,
+    required: true,
+  },
+  original_language: {
+    type: String,
+    required: true,
+  },
+  poster_path: {
+    type: String,
+    required: true,
+  },
+  vote_average: {
+    type: String,
+    required: true,
+  },
+
+  // timestamp: true,
+}, {_id: false});
 
 moviesSchema.statics.getMovieCountByUserId = function () {
-    return this.countDocuments({ user_id: userId });
-}
+  return this.countDocuments({ user_id: userId });
+};
 
-const Movies = mongoose.model('Movies', moviesSchema);
-export default Movies;
+// const Movies = mongoose.model("Movies", moviesSchema);
+export default moviesSchema;
