@@ -6,6 +6,6 @@ import AuthMiddleWare from "../utils/Auth.js";
 const router = Router();
 
 router.use('/', movieRoutes);
-router.use('/users', AuthMiddleWare.authMiddleware, userRoutes);
+router.use('/users', userRoutes);
 
 export default router;

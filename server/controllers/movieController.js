@@ -7,13 +7,16 @@ import mongoose from "mongoose"
 const movieController = {
   async fetchMovies(req, res) {
     try {
-      const response = await fetch("https://api.themoviedb.org/3/movie/popular?language=en-US&page=1", {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization: `Bearer ${process.env.API_READ_ACCESS_TOKEN}`,
-        },
-      });
+      const response = await fetch(
+        "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
+        {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+            Authorization: `Bearer ${process.env.API_READ_ACCESS_TOKEN}`,
+          },
+        }
+      );
       if (!response.ok) {
         throw new Error("Fetch Failed!");
       }
@@ -22,19 +25,24 @@ const movieController = {
         .status(200)
         .json({ data: data, message: "Fetch request Successful!" });
     } catch (error) {
-      res.status(500).json({ error: error.message,  message: "Internal Server Error" });
+      res
+        .status(500)
+        .json({ error: error.message, message: "Internal Server Error" });
     }
   },
   async fetchSingleMovie(req, res) {
-    const params  = req.query.movie;
+    const params = req.query.movie;
     try {
-      const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${params}&include_adult=false&language=en-US&page=1`, {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization: `Bearer ${process.env.API_READ_ACCESS_TOKEN}`,
-        },
-      });
+      const response = await fetch(
+        `https://api.themoviedb.org/3/search/movie?query=${params}&include_adult=false&language=en-US&page=1`,
+        {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+            Authorization: `Bearer ${process.env.API_READ_ACCESS_TOKEN}`,
+          },
+        }
+      );
       if (!response.ok) {
         throw new Error("Fetch Failed!");
       }
@@ -43,56 +51,70 @@ const movieController = {
         .status(200)
         .json({ data: data, message: "Fetch request Successful!" });
     } catch (error) {
-      console.error('Error:', error);
-      return res.status(500).json({error: error.message, message: 'Internal Server Error'});
+      console.error("Error:", error);
+      return res
+        .status(500)
+        .json({ error: error.message, message: "Internal Server Error" });
     }
   },
 
-  //Mongo db is interpreting the data as binary instead of different data structures. this is why TypeScript is favoured. TypeSafetyBaby
+  // send movie id with req body to this endpoint
   async favouriteMovie(req, res) {
-    try{
-      const userId = req.user._id
-      const  movie_id  = 8587;
-      const user = await User.findById(userId);
-      if(!user) {
-        return res.status(409).json({ message: "No user found"})
-      }
-    if(!user.favorites) {
-      user.favorites = []
-    }
+    try {
+      const userId = req.user._id;
+      const movie_id = req.body.movieId;
 
-    const response = await fetch(`https://api.themoviedb.org/3/movie/${movie_id}`, {
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${process.env.API_READ_ACCESS_TOKEN}`,
+      const response = await fetch(
+        `https://api.themoviedb.org/3/movie/${movie_id}`,
+        {
+          headers: {
+            accept: "application/json",
+            Authorization: `Bearer ${process.env.API_READ_ACCESS_TOKEN}`,
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Error finding movie");
       }
-    });
-    if(!response.ok) {
-      throw new Error("Error find movie");
-    }
-    const movie = await response.json()
-console.log(movie)
-   
-    
-      return res.status(200).json({ message: "Movie saved", user });
+      const movie = await response.json();
 
-      
-      // const existingMovie = await Movies.findOne({ title: req.body.title});
-      // if(!existingMovie) {
-      //   const movie = await Movies.create(req.body);
-      //   await movie.save();
-      //   return res
-      //   .status(200)
-      //   .json({ data: movie, message: "Movie Saved!" })
-      // } else {
-      //   return res.status(409).json({ message: "Movie already favourited!"})
-      // }
+      const movieObject = {
+        movie_id: movie.id,
+        title: movie.title,
+        overview: movie.overview,
+        original_language: movie.original_language,
+        poster_path: movie.poster_path,
+        vote_average: movie.vote_average,
+      };
+
+      const user = await User.findOne({
+        _id: userId,
+        "favorites.movie_id": movie.id,
+      });
+
+      if (user) {
+        return res.status(409).json({ message: "Movie already in favorites!" });
+      }
+
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        {
+          $push: { favorites: movieObject },
+        },
+        { new: true }
+      );
+
+      await updatedUser.save();
+      return res
+        .status(201)
+        .json({ message: "Movie saved", data: updatedUser });
     } catch (error) {
-      console.error(error.message)
-      res.status(500).json({ error: error.message, message: "Internal Server Error" })
+      console.error(error.message);
+      res
+        .status(500)
+        .json({ error: error.message, message: "Internal Server Error" });
     }
-  }
-
+  },
 };
 
 export default movieController;
