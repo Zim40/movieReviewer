@@ -11,7 +11,7 @@ export default function Navbar() {
   const nodeRef = useRef(null);
 
   const isUser = Auth.loggedIn() ? Auth.getProfile().data : null;
-  console.log(isUser);
+  
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);

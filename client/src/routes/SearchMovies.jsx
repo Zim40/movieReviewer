@@ -1,26 +1,44 @@
-import { useState, Suspense, lazy } from "react";
-const Card = lazy(() => import("../Components/Card/card"))
+import { useState, useEffect, Suspense, lazy } from "react";
+const Card = lazy(() => import("../Components/Card/card"));
 import Spinner from "../Spinner";
 // import Card from "../Components/Card/card";
-import { fetchSingleMovie } from "../Functions/movies";
-
+import { fetchSingleMovie, myProfile } from "../Functions/movies";
 
 export default function SearchMovies() {
   const [movie, setMovie] = useState() || null;
+  const [userFavorites, setUserFavorites] = useState([]) || null;
   const [searchParam, setSearchParam] = useState({ movie: "" });
   const [errorMessage, setErrorMessage] = useState() || null;
 
+  useEffect(() => {
+    const user = async () => {
+      try {
+        const fetchUser = await myProfile();
 
+        const favArray = fetchUser?.user.favorites;
+
+        if (!favArray) {
+          throw new Error("Error finding favorites!");
+        }
+
+        const favoriteIds = favArray.map((fav) => fav.movie_id);
+        setUserFavorites(favoriteIds);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    user();
+  }, [setUserFavorites]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if(!searchParam.movie) {
-        setErrorMessage("Search Term Required!")
+      if (!searchParam.movie) {
+        setErrorMessage("Search Term Required!");
         setTimeout(() => {
-          setErrorMessage("")
-        }, 1000)
-        return
+          setErrorMessage("");
+        }, 1000);
+        return;
       }
       const fetchMove = await fetchSingleMovie(
         encodeURIComponent(searchParam.movie)
@@ -36,9 +54,9 @@ export default function SearchMovies() {
     const { name, value } = e.target;
     setSearchParam((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
-  }
+  };
 
   return (
     <>
@@ -58,25 +76,26 @@ export default function SearchMovies() {
             value={searchParam.movie}
             onChange={handleInputChange}
             placeholder={errorMessage ? errorMessage : "Search"}
-            className={`w-full border rounded-full h-8 border-amber-400 px-6 text-center text-amber-400 ${errorMessage ? "placeholder-red-400" : "placeholder-gray-400"}`}
+            className={`w-full border rounded-full h-8 border-amber-400 px-6 text-center text-amber-400 ${
+              errorMessage ? "placeholder-red-400" : "placeholder-gray-400"
+            }`}
           />
         </div>
         <div className="py-4 flex align-center  place-items-center gap-2 flex-row-reverse w-full md:w-1/3">
-          {
-            movie && (
-              <Suspense fallback={<Spinner />}>
+          {movie && (
+            <Suspense fallback={<Spinner />}>
               <Card
+                id={movie?.id}
                 title={movie?.title || null}
                 poster_path={movie?.backdrop_path || null}
                 overview={movie?.overview || null}
                 release_date={movie?.release_date}
                 vote_average={movie?.vote_average}
                 original_language={movie?.original_language}
+                favorites={userFavorites}
               />
             </Suspense>
-            )
-          
-          }
+          )}
         </div>
       </section>
     </>
