@@ -11,7 +11,6 @@ export default function Navbar() {
   const nodeRef = useRef(null);
 
   const isUser = Auth.loggedIn() ? Auth.getProfile().data : null;
-  
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -26,17 +25,25 @@ export default function Navbar() {
       <ul className="flex align-middle items-center justify-end p-2">
         <h1 className="mr-auto tracking-tighter font-semibold">
           <Link to="/">
-          {isUser ? `${isUser.firstName} ${isUser.lastName}` : `Welcome`}
+            {isUser ? `${isUser.firstName} ${isUser.lastName}` : `Welcome`}
           </Link>
         </h1>
 
-        <div className="flex gap-2 flex-row-reverse hidden sm:flex">
+        <div className="flex gap-10 flex-row-reverse hidden sm:flex">
           {Auth.loggedIn() ? (
-            <li className="">
-              <span onClick={logout} className="">
-                Logout
-              </span>
-            </li>
+            <>
+              <li className="">
+                <span onClick={logout} className="">
+                  Logout
+                </span>
+              </li>
+              <li>
+                <Link to="/dashboard">Dashboard</Link>
+              </li>
+              <li>
+                <Link to="/searchMovies">Browse Movies</Link>
+              </li>
+            </>
           ) : (
             <li className="">
               <span className="mr-2">
@@ -49,12 +56,6 @@ export default function Navbar() {
           )}
           <li className="">
             <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-          <li>
-            <Link to="/searchMovies">Browse Movies</Link>
           </li>
         </div>
 
@@ -87,19 +88,19 @@ const mobileNav = (toggleMenu, logout) => {
               Home
             </Link>
           </li>
-          <li>
-            <Link to="/dashboard" onClick={toggleMenu}>
-              Dashboard
-            </Link>
-          </li>
-          <li>
-            <Link to="/searchMovies" onClick={toggleMenu}>
-              Browse Movies
-            </Link>
-          </li>
 
           {Auth.loggedIn() ? (
-            <div className="mt-8">
+            <div className="mt-8 space-y-10">
+              <li>
+                <Link to="/dashboard" onClick={toggleMenu}>
+                  Dashboard
+                </Link>
+              </li>
+              <li>
+                <Link to="/searchMovies" onClick={toggleMenu}>
+                  Browse Movies
+                </Link>
+              </li>
               <p className="">
                 <span onClick={logout} className="">
                   Logout

@@ -1,17 +1,17 @@
+// import Auth from "../utils/Auth";
 import { useState, useEffect, Suspense, lazy } from "react";
 const Card = lazy(() => import("../Components/Card/card"));
 import Spinner from "../Spinner";
-// import Card from "../Components/Card/card";
-import { fetchSingleMovie, myProfile } from "../Functions/movies";
+import { fetchSingleMovie, myProfile, favoriteMovie } from "../Functions/movies";
 
 export default function SearchMovies() {
   const [movie, setMovie] = useState() || null;
-  const [userFavorites, setUserFavorites] = useState([]) || null;
+  const [userFavorites, setUserFavorites] = useState([]);
   const [searchParam, setSearchParam] = useState({ movie: "" });
   const [errorMessage, setErrorMessage] = useState() || null;
 
   useEffect(() => {
-    const user = async () => {
+    const fetchUserFavorites = async () => {
       try {
         const fetchUser = await myProfile();
 
@@ -27,7 +27,7 @@ export default function SearchMovies() {
         console.error(error);
       }
     };
-    user();
+    fetchUserFavorites();
   }, [setUserFavorites]);
 
   const handleSubmit = async (e) => {
@@ -58,6 +58,23 @@ export default function SearchMovies() {
     }));
   };
 
+  const handleToggleFavorite = async () => {
+    const movieId = movie.id;
+    try {
+      const response = await favoriteMovie(movieId);
+      const result = await response.json();
+      if (response.status === 201) {
+        setUserFavorites((prevState) => 
+          [...prevState, movieId.toString()]
+        );
+      } else {
+        setErrorMessage(result.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <section className="flex flex-col w-full align-center place-items-center justify-center p-4 ">
@@ -82,17 +99,18 @@ export default function SearchMovies() {
           />
         </div>
         <div className="py-4 flex align-center  place-items-center gap-2 flex-row-reverse w-full md:w-1/3">
-          {movie && (
+          {movie && userFavorites?.length > 0 && (
             <Suspense fallback={<Spinner />}>
               <Card
                 id={movie?.id}
                 title={movie?.title || null}
-                poster_path={movie?.backdrop_path || null}
+                poster_path={movie?.poster_path || null}
                 overview={movie?.overview || null}
                 release_date={movie?.release_date}
                 vote_average={movie?.vote_average}
                 original_language={movie?.original_language}
                 favorites={userFavorites}
+                onToggleFavorite={handleToggleFavorite}
               />
             </Suspense>
           )}

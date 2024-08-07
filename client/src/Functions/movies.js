@@ -61,6 +61,27 @@ export async function myProfile() {
   }
 }
 
+export async function favoriteMovie (movieId) {
+  const user = Auth.loggedIn() ? Auth.getToken() : null;
+  try {
+    const response = await fetch("/api/favourite/movie", {
+      method: "POST",
+      headers: {
+        "Content-Type" : "application/json",
+        "Authorization" : `Bearer ${user}`
+      },
+      body: JSON.stringify({ movieId: movieId})
+    })
+    if(!response.ok) {
+      throw new Error("Error with Response!")
+      
+    }
+    return response
+  } catch(error) {
+    console.error(error)
+    
+  }
+}
 // export async function isFavorite (array, id) {
 //   for(let i = 0; i < array.length; i++) {
 //     if(array[i].movie_id === id ) {

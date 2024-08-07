@@ -7,8 +7,10 @@ import Image from "../../assets/Hero.jpg";
 // import Movies from '../Movies/movies';
 const Movies = lazy(() => import("../Movies/movies"));
 import "./style.css";
+import Auth from "../../utils/Auth";
 
 export default function Hero({ lineOne, subTextOne, subTitle, subTextTwo }) {
+  const isUser = Auth.loggedIn() ? Auth.getProfile().data : null;
   return (
     <div className="z-10 relative  sm:h-96">
       <div className="absolute flex flex-col items-center w-full h-screen  bg-black bg-opacity-60 p-2">
@@ -20,7 +22,10 @@ export default function Hero({ lineOne, subTextOne, subTitle, subTextTwo }) {
           {subTitle}
         </h2>
         <p className="text-md">{subTextTwo}</p>
-        <div className="flex align-center items-center justify-center rounded-full bg-[#0e1018] bg-opacity-60 gap-4 p-2 mt-4 w-full md:w-1/2">
+        {isUser ? (
+        ""
+        ) : (
+          <div className="flex align-center items-center justify-center rounded-full bg-[#0e1018] bg-opacity-60 gap-4 p-2 mt-4 w-full md:w-1/2">
           <Link to="/login">
             <button className="flex w-36 align-center items-center justify-center border border-amber-400 rounded-full  p-1 bg-[#0e1018]">
               Login
@@ -32,10 +37,13 @@ export default function Hero({ lineOne, subTextOne, subTitle, subTextTwo }) {
             </button>
           </Link>
         </div>
+        )}
 
         <Suspense fallback={<Spinner />}>
           <div className="flex w-full text-sm px-4 mt-4">
-            <label className="block border-b border-r border-amber-400 px-2 text-amber-400 font-semibold font-mono rounded-md">Popular</label>
+            <label className="block border-b border-r border-amber-400 px-2 text-amber-400 font-semibold font-mono rounded-md">
+              Popular
+            </label>
           </div>
 
           <div className="flex w-full overflow-y-hidden overflow-x-scroll">
