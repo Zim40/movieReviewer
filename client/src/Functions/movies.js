@@ -72,11 +72,15 @@ export async function favoriteMovie (movieId) {
       },
       body: JSON.stringify({ movieId: movieId})
     })
+    console.log(response)
     if(!response.ok) {
-      throw new Error("Error with Response!")
+      const errorResponse = await response.json()
+      throw new Error(errorResponse.message || "Error with response")
       
     }
-    return response
+    const data = await response.json();
+    return { status: response.status, data }
+    // return response
   } catch(error) {
     console.error(error)
     

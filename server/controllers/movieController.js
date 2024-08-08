@@ -109,7 +109,7 @@ const movieController = {
         .status(201)
         .json({ message: "Movie saved", data: updatedUser });
     } catch (error) {
-      console.error(error.message);
+      console.error("Internal Server Error", error);
       res
         .status(500)
         .json({ error: error.message, message: "Internal Server Error" });

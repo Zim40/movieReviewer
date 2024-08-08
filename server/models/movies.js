@@ -12,7 +12,6 @@ const moviesSchema = new Schema({
   },
   overview: {
     type: String,
-    required: true,
   },
   original_language: {
     type: String,

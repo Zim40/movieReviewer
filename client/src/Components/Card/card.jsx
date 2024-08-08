@@ -75,9 +75,9 @@ export default function Card({
 Card.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  original_language: PropTypes.string.isRequired,
-  overview: PropTypes.string.isRequired,
-  release_date: PropTypes.string.isRequired,
+  original_language: PropTypes.string,
+  overview: PropTypes.string,
+  release_date: PropTypes.string,
   vote_average: PropTypes.number,
   poster_path: PropTypes.string,
   favorites: PropTypes.arrayOf(PropTypes.string).isRequired,

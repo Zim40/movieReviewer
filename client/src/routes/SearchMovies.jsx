@@ -19,7 +19,7 @@ export default function SearchMovies() {
       try {
         const fetchUser = await myProfile();
 
-        const favArray = await fetchUser?.user.favorites;
+        const favArray = fetchUser?.user.favorites;
 
         if (!favArray) {
           throw new Error("Error finding favorites!");
@@ -33,7 +33,7 @@ export default function SearchMovies() {
     };
     fetchUserFavorites();
   }, [setUserFavorites]);
-console.log(userFavorites)
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -66,17 +66,20 @@ console.log(userFavorites)
     const movieId = movie.id;
     try {
       const response = await favoriteMovie(movieId);
-      const result = await response.json();
-      if (response.status === 201) {
-        setUserFavorites((prevState) => [...prevState, movieId.toString()]);
-      } else {
-        setErrorMessage(result.message);
+      console.log(response);
+      if(!response.status === 201) {
+        console.log("Error with handleToggleFavorite function!")
       }
+      else  {
+        setUserFavorites((prevState) => [...prevState, movieId.toString()]);
+      } 
+
     } catch (error) {
       console.error(error);
     }
   };
-
+ 
+  
   return (
     <>
       <section className="flex flex-col w-full align-center place-items-center justify-center p-4 ">
@@ -101,13 +104,13 @@ console.log(userFavorites)
           />
         </div>
         <div className="py-4 flex align-center  place-items-center gap-2 flex-row-reverse w-full md:w-1/3">
-          {movie && userFavorites?.length > 0 && (
+          {movie && userFavorites?.length >= 0 && (
             <Suspense fallback={<Spinner />}>
               <Card
                 id={movie?.id}
-                title={movie?.title || null}
-                poster_path={movie?.poster_path || null}
-                overview={movie?.overview || null}
+                title={movie?.title}
+                poster_path={movie?.poster_path}
+                overview={movie?.overview}
                 release_date={movie?.release_date}
                 vote_average={movie?.vote_average}
                 original_language={movie?.original_language}
