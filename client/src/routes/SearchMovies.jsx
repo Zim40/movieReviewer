@@ -19,7 +19,7 @@ export default function SearchMovies() {
       try {
         const fetchUser = await myProfile();
 
-        const favArray = fetchUser?.user.favorites;
+        const favArray = await fetchUser?.user.favorites;
 
         if (!favArray) {
           throw new Error("Error finding favorites!");
