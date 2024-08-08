@@ -2,7 +2,11 @@
 import { useState, useEffect, Suspense, lazy } from "react";
 const Card = lazy(() => import("../Components/Card/card"));
 import Spinner from "../Spinner";
-import { fetchSingleMovie, myProfile, favoriteMovie } from "../Functions/movies";
+import {
+  fetchSingleMovie,
+  myProfile,
+  favoriteMovie,
+} from "../Functions/movies";
 
 export default function SearchMovies() {
   const [movie, setMovie] = useState() || null;
@@ -29,7 +33,7 @@ export default function SearchMovies() {
     };
     fetchUserFavorites();
   }, [setUserFavorites]);
-
+console.log(userFavorites)
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -64,9 +68,7 @@ export default function SearchMovies() {
       const response = await favoriteMovie(movieId);
       const result = await response.json();
       if (response.status === 201) {
-        setUserFavorites((prevState) => 
-          [...prevState, movieId.toString()]
-        );
+        setUserFavorites((prevState) => [...prevState, movieId.toString()]);
       } else {
         setErrorMessage(result.message);
       }
