@@ -1,10 +1,7 @@
 import PropTypes from "prop-types";
-// import { useEffect, useState } from "react";
-// import { RiStarSFill } from "react-icons/ri";
-// import { RiStarSLine } from "react-icons/ri";
 import { formatPercentage } from "../../Functions/movies";
 import { FaStar, FaRegStar } from "react-icons/fa";
-// import Auth from "../../utils/Auth";
+
 
 export default function Card({
   id,
@@ -27,23 +24,30 @@ export default function Card({
         <h1 className="flex font-bold text-lg tracking-wide font-mono border-b border-amber-400 border-opacity-30 mb-4">
           {title}
           {isFavorite ? (
+            // Filled
             <FaStar
               className="text-green-400 ml-auto text-2xl"
               onClick={onToggleFavorite}
-            /> // Filled star icon if favorite
+            />
           ) : (
+            // Empty
             <FaRegStar
               className="text-gray-400 ml-auto text-2xl"
               onClick={onToggleFavorite}
-            /> // Outline star icon if not favorite
+            />
           )}
         </h1>
         <div className="flex">
-          <img
-            className="rounded-lg border border-black border-2 w-1/2 h-auto "
-            src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-            alt={`${title} Image`}
-          />
+          {!poster_path ? (
+            <p>No Image Available</p>
+          ) : (
+            <img
+              className="rounded-lg border border-black border-2 w-1/2 h-auto "
+              src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+              alt={`${title} Image`}
+            />
+          )}
+
           <div className="flex flex-col p-2 space-y-4">
             <p>
               <span className="font-semibold text-amber-400">Release: </span>

@@ -32,8 +32,8 @@ export async function fetchSingleMovie(param) {
       throw new Error("Error with Fetch Single Movie Response");
     }
     const singleMovie = await response.json();
-    
-    return singleMovie.data.results[0];
+    console.log("Single movie fetch function:", singleMovie)
+    return singleMovie;
   } catch (error) {
     console.error(error);
   }
@@ -72,7 +72,7 @@ export async function favoriteMovie (movieId) {
       },
       body: JSON.stringify({ movieId: movieId})
     })
-    console.log(response)
+    
     if(!response.ok) {
       const errorResponse = await response.json()
       throw new Error(errorResponse.message || "Error with response")
@@ -80,16 +80,9 @@ export async function favoriteMovie (movieId) {
     }
     const data = await response.json();
     return { status: response.status, data }
-    // return response
   } catch(error) {
     console.error(error)
     
   }
 }
-// export async function isFavorite (array, id) {
-//   for(let i = 0; i < array.length; i++) {
-//     if(array[i].movie_id === id ) {
-//       return true  
-//     }
-//   }
-// } 
+

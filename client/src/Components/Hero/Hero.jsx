@@ -41,7 +41,7 @@ export default function Hero({ lineOne, subTextOne, subTitle, subTextTwo }) {
 
         <Suspense fallback={<Spinner />}>
           <div className="flex w-full text-sm px-4 mt-4">
-            <label className="block border-b border-r border-amber-400 px-2 text-amber-400 font-semibold font-mono rounded-md">
+            <label className="block border-b border-r border-amber-400 px-2 text-amber-400 font-semibold font-mono rounded-md bg-[#0e1018] bg-opacity-60">
               Popular
             </label>
           </div>

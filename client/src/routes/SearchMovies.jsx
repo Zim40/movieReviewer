@@ -1,4 +1,4 @@
-// import Auth from "../utils/Auth";
+
 import { useState, useEffect, Suspense, lazy } from "react";
 const Card = lazy(() => import("../Components/Card/card"));
 import Spinner from "../Spinner";
@@ -10,6 +10,7 @@ import {
 
 export default function SearchMovies() {
   const [movie, setMovie] = useState() || null;
+  const [otherResults, setOtherResults] = useState([]) || null;
   const [userFavorites, setUserFavorites] = useState([]);
   const [searchParam, setSearchParam] = useState({ movie: "" });
   const [errorMessage, setErrorMessage] = useState() || null;
@@ -44,10 +45,13 @@ export default function SearchMovies() {
         }, 1000);
         return;
       }
-      const fetchMove = await fetchSingleMovie(
+      const fetchMovie = await fetchSingleMovie(
         encodeURIComponent(searchParam.movie)
       );
-      setMovie(fetchMove);
+
+      setMovie(fetchMovie.data.results[0]);
+      const resultArr = fetchMovie.data.results.splice(1);
+      setOtherResults(resultArr);
       setSearchParam({ movie: "" });
     } catch (error) {
       console.error(error);
@@ -62,26 +66,23 @@ export default function SearchMovies() {
     }));
   };
 
-  const handleToggleFavorite = async () => {
-    const movieId = movie.id;
+  const handleToggleFavorite = async (movieId) => {
+    console.log(movieId);
     try {
       const response = await favoriteMovie(movieId);
-      console.log(response);
-      if(!response.status === 201) {
-        console.log("Error with handleToggleFavorite function!")
-      }
-      else  {
+      
+      if (!response.status === 201) {
+        console.log("Error with handleToggleFavorite function!");
+      } else {
         setUserFavorites((prevState) => [...prevState, movieId.toString()]);
-      } 
-
+      }
     } catch (error) {
       console.error(error);
     }
   };
- 
-  
+
   return (
-    <>
+    
       <section className="flex flex-col w-full align-center place-items-center justify-center p-4 ">
         <div className="flex align-center  place-items-center gap-2 flex-row-reverse w-full md:w-1/3">
           <button
@@ -103,9 +104,14 @@ export default function SearchMovies() {
             }`}
           />
         </div>
-        <div className="py-4 flex align-center  place-items-center gap-2 flex-row-reverse w-full md:w-1/3">
-          {movie && userFavorites?.length >= 0 && (
-            <Suspense fallback={<Spinner />}>
+        {movie && userFavorites?.length >= 0 && (
+          <Suspense fallback={<Spinner />}>
+            <div className=" flex mt-4 w-full md:w-1/3 border-b border-amber-400">
+              <h2 className="text-amber-400 font-bold text-xl font-mono tracking-widest">
+                Top Result
+              </h2>
+            </div>
+            <div className="py-4 flex align-center  place-items-center gap-2 flex-row-reverse w-full md:w-1/3 " key={movie.id}>
               <Card
                 id={movie?.id}
                 title={movie?.title}
@@ -115,12 +121,40 @@ export default function SearchMovies() {
                 vote_average={movie?.vote_average}
                 original_language={movie?.original_language}
                 favorites={userFavorites}
-                onToggleFavorite={handleToggleFavorite}
+                onToggleFavorite={() => handleToggleFavorite(movie.id)}
               />
-            </Suspense>
-          )}
-        </div>
+            </div>
+          </Suspense>
+        )}
+        {movie && otherResults && (
+          <div className=" flex mt-4 w-full md:w-1/3 border-b border-amber-400">
+            <h2 className="text-amber-400 font-bold text-xl font-mono tracking-widest">
+              Other Results
+            </h2>
+          </div>
+        )}
+
+        {otherResults?.map((movie) => (
+          
+            <div
+              className="py-4 flex align-center  place-items-center gap-2 flex-row-reverse w-full md:w-1/3"
+              key={movie.id}
+            >
+              <Card
+                id={movie.id}
+                title={movie.title}
+                poster_path={movie.poster_path}
+                overview={movie.overview}
+                release_date={movie.release_date}
+                vote_average={movie.vote_average}
+                original_language={movie.original_language}
+                favorites={userFavorites}
+                onToggleFavorite={() => handleToggleFavorite(movie.id)}
+              />
+            </div>
+         
+        ))}
       </section>
-    </>
+   
   );
 }
