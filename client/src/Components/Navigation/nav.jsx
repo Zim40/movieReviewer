@@ -21,8 +21,8 @@ export default function Navbar() {
     Auth.logout();
   };
   return (
-    <nav className="w-full">
-      <ul className="flex align-middle items-center justify-end p-2">
+    <nav className="  w-full">
+      <ul className=" flex align-middle items-center justify-end p-2">
         <h1 className="mr-auto tracking-tighter font-semibold">
           <Link to="/">
             {isUser ? `${isUser.firstName} ${isUser.lastName}` : `Welcome`}

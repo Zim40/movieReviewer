@@ -36,7 +36,9 @@ const router = createBrowserRouter([
         element: <SearchMovies />
       }
     ],
+    
   },
+  
   //Other routes + elements ...
 ]);
 
